@@ -19,6 +19,11 @@ public class DeBruijnGraph {
             map.put(sub1, temp);
             ++start;
         }
+        createResult(result, map);
+        return result;
+    }
+
+    private void createResult(ArrayList<String> result, TreeMap<String, ArrayList<String>> map) {
         for (String key : map.keySet()) {
             ArrayList<String> next = map.get(key);
             if (next.size() > 0) {
@@ -31,6 +36,23 @@ public class DeBruijnGraph {
                 result.add(sb.toString());
             }
         }
+    }
+
+    public ArrayList<String> createGraph(ArrayList<String> kmers) {
+        ArrayList<String> result = new ArrayList<>();
+
+        OverlapGraph og = new OverlapGraph();
+        ArrayList<String> aList = og.constructOverlapList(kmers);
+        TreeMap<String, ArrayList<String>> map = new TreeMap<>();
+        for (String s : aList) {
+            String[] sub = s.split(" ");
+            ArrayList<String> temp = map.get(sub[0]);
+            if (temp == null)
+                temp = new ArrayList<>();
+            temp.add(sub[1]);
+            map.put(sub[0], temp);
+        }
+        createResult(result, map);
         return result;
     }
 }
