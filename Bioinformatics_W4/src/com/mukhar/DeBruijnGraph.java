@@ -49,7 +49,7 @@ public class DeBruijnGraph {
             ArrayList<String> temp = map.get(sub[0]);
             if (temp == null)
                 temp = new ArrayList<>();
-            temp.add(sub[1]);
+            temp.add(sub[2]);
             map.put(sub[0], temp);
         }
         createResult(result, map);
