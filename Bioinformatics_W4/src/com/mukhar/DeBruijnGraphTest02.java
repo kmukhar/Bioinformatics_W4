@@ -11,14 +11,10 @@ import org.junit.Test;
 import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.introcs.Out;
 
-public class DeBruijnGraphTest {
+public class DeBruijnGraphTest02 {
 
-    private int k;
-
-    private String text;
-
+    private ArrayList<String> kmers;
     private ArrayList<String> expected;
-
     private DeBruijnGraph dbg;
 
     @Before
@@ -32,34 +28,22 @@ public class DeBruijnGraphTest {
 
     @Test
     public void testCreateGraph01() {
-        readTestData("src/com/mukhar/debruijn_graph_string_sample.txt");
-        ArrayList<String> actual = dbg.createGraph(text, k);
-        assertEquals(expected, actual);
+        readTestData("src/com/mukhar/debruijn_graph_kmers_sample.txt");
+        ArrayList<String> actual = dbg.createGraph(kmers);
+//        assertEquals(expected, actual);
+        for (String s : actual)
+            System.out.println(s);
     }
 
-    @Test
-    public void testCreateGraph02() {
-        readTestData("src/com/mukhar/debruijn_graph_string.txt");
-        ArrayList<String> actual = dbg.createGraph(text, k);
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testCreateGraph03() {
-        readQuizData("src/com/mukhar/dataset_53_6.txt");
-        ArrayList<String> actual = dbg.createGraph(text, k);
-        printToFile(actual);
-    }
-    
     public void readTestData(String name) {
         In in = new In(name);
         in.readLine(); // ignore Input
-        k = in.readInt();
-        in.readLine();
-        text = in.readLine();
-        in.readLine();
-        expected = new ArrayList<>();
+        kmers = new ArrayList<>();
         String s = "";
+        while (!(s = in.readLine()).equalsIgnoreCase("Output:")) {
+            kmers.add(s);
+        }
+        expected = new ArrayList<>();
         while ((s = in.readLine()) != null) {
             expected.add(s);
         }
@@ -67,9 +51,11 @@ public class DeBruijnGraphTest {
 
     public void readQuizData(String name) {
         In in = new In(name);
-        k = in.readInt();
-        in.readLine();
-        text = in.readLine();
+        kmers = new ArrayList<>();
+        String s = "";
+        while ((s = in.readLine()) != null) {
+            kmers.add(s);
+        }
     }
 
     private void printToFile(ArrayList<String> actual) {
@@ -78,5 +64,4 @@ public class DeBruijnGraphTest {
             out.println(s);
         out.close();
     }
-
 }
